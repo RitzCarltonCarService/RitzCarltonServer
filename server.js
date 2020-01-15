@@ -17,7 +17,7 @@ const { auth } = require('./routes');
 app.use(auth);
 
 app.get("/", (req, res) => {
-    res.send("Drive yourself.")
+    res.send("Drive yourself!")
 })
 
 app.listen(3000, () => {
