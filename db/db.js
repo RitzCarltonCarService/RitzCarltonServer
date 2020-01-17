@@ -11,11 +11,10 @@ var connection = mysql.createConnection({
     host: 'ritzuber1.cgmhnhykd7qi.us-east-2.rds.amazonaws.com',
     port: '3306',
     user: 'ritzuber1',
-    password: process.env.DB_PASSWORD,
+    password: 'ritzuber1',
     database: 'ritzuber1'
 });
 
 connection.connect((res) => console.log("connected to db, ", res));
 
 module.exports = connection;
-
