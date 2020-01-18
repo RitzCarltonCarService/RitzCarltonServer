@@ -14,5 +14,3 @@ const getHotels = function () {
 }
 
 module.exports = { getHotels }
-
-//ignore this comment
