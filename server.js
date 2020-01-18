@@ -14,15 +14,15 @@ app.use(express.urlencoded({ extended: true }));
 
 //routes go here
 const { auth } = require('./routes');
+const { hotels } = require('./routes');
+const { pickups } = require('./routes');
 app.use(auth);
+app.use(hotels);
+app.use(pickups);
 
 app.get("/", (req, res) => {
     res.send("Drive yourself!")
 })
-
-
-
-
 
 
 app.listen(3000, () => {

@@ -16,10 +16,10 @@ router.post('/api/signup', (req, res) => {
 router.get("/api/login", (req, res) => {
     db.auth.login(helpers.addQuotes(req.query.id))
     .then((val) => {
-        res.send(val)
+        res.send(val);
     })
     .catch((err) => {
-        res.send(err)
+        res.send(err);
     })
 })
 
