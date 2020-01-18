@@ -13,8 +13,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 //routes go here
-const { auth } = require('./routes');
+const { auth, scheduleRide } = require('./routes');
 app.use(auth);
+app.use(scheduleRide);
 
 app.get("/", (req, res) => {
     res.send("Drive yourself!")

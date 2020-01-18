@@ -1,3 +1,4 @@
 const auth = require('./auth');
+const scheduleRide = require('./scheduleRide');
 
-module.exports = { auth }
+module.exports = { auth, scheduleRide }
