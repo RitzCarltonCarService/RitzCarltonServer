@@ -80,4 +80,17 @@ const setHotel = function (id, hotelId) {
     })
 }
 
-module.exports = { signup, login, setName, setEmail, setPhoneNumber, setHotel }
+const deleteUser = function (id) {
+    return new Promise ((resolve, reject) => {
+        const queryString = "DELETE FROM users WHERE id = " + [id];
+        connection.query(queryString, (err, res) => {
+            if (err) {
+                reject (err);
+            } else {
+                resolve("success");
+            }
+        })
+    })
+}
+
+module.exports = { signup, login, setName, setEmail, setPhoneNumber, setHotel, deleteUser }

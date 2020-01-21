@@ -18,4 +18,17 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
     })
 }
 
-module.exports = { createPickup }
+const deletePickup = function (id) {
+    return new Promise((resolve, reject) => {
+        const queryString = "DELETE FROM pickups WHERE id = "  + [id] ; //TODO: make sure this query also removes its id from any other pickup that has it as a ride share.
+        connection.query(queryString, (err) => {
+            if (err) {
+                reject (err);
+            } else {
+                resolve("success");
+            }
+        })
+    })
+}
+
+module.exports = { createPickup, deletePickup }

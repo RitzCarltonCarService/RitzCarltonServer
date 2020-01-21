@@ -12,4 +12,14 @@ router.post("/api/createPickup", (req, res) => {
     })
 })
 
+router.post("/api/deletePickup", (req, res) => {
+    db.pickups.deletePickup(req.body.id)
+    .then((val) => {
+        res.send(val)
+    })
+    .catch((err) => {
+        res.send(err);
+    })
+})
+
 module.exports = router;
