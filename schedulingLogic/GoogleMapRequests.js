@@ -7,6 +7,8 @@ const axios = require('axios');
 //checks to see whether a pickup will fit between two other travel nodes
 const validatePickup = function (startNode, endNode, pickup) {
 
+    console.log("validatePickup is running");
+
     return new Promise ((resolve, reject) => {
 
         const params1 = {
@@ -43,6 +45,7 @@ const validatePickup = function (startNode, endNode, pickup) {
             })
         })
         .then((result) => {
+            console.log("First leg succeeded");
             result2 = result.data;
             if (params2.departure_time + (result.data.rows[0].elements[0].duration.value * 1010) >= endNode.estimatedStartTime.getTime()) {
                 console.log("FAIL")
@@ -54,10 +57,12 @@ const validatePickup = function (startNode, endNode, pickup) {
             })
         })
         .then((result) => {
+            console.log("Second leg succeeded");
             if (params3.departure_time + (result.data.rows[0].elements[0].duration.value * 1010) >= endNode.estimatedStartTime.getTime()) {
                 console.log("FAIL");
                 resolve(null);
             }
+            console.log("Third leg succeeded");
             resolve({estimatedEndTime: params3.departure_time});
         })
         .catch((err) => {

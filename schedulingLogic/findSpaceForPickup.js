@@ -3,10 +3,12 @@ const { validatePickup } = require('./GoogleMapRequests');
 const findSpaceForPickup = function (pickupData, availability) {
     return new Promise((resolve, reject) => {
 
+        console.log(JSON.stringify(availability));
+
         //sort the pickups in the availability by startTime
         availability.pickups.sort((a, b) => b.startTime - a.startTime)
 
-        //initialize previousNode the beginning of the availability
+        //initialize previousNode as the beginning of the availability
         let previousNode = {
             endLat: availability.availability.lat,
             endLng: availability.availability.lng,
@@ -39,9 +41,12 @@ const findSpaceForPickup = function (pickupData, availability) {
 
         validatePickup(previousNode, nextNode, pickupData)
         .then(data => {
+            console.log("resolving in .then")
             resolve(data);
         })
         .catch(err => {
+            console.log("resolving in .catch")
+            console.log(err);
             reject(err);
         })
 

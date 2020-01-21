@@ -14,6 +14,11 @@ const scheduleRide = function (pickupData, cb) {
         );
     })
     .then((availabilities) => {    
+        if (availabilities.length === 0) {
+            cb("There are no drivers working at that time");
+            return;
+        }
+        console.log("Found " + availabilities.length + " availabilities");
         availabilities.sort( (a, b) => b.pickups.length - a.pickups.length );
         asyncForEach(availabilities, availability => {
             findSpaceForPickup(pickupData, availability)
@@ -21,6 +26,8 @@ const scheduleRide = function (pickupData, cb) {
                 if (!data) {
                     resolve("All cars are busy at this time!")
                 } else {
+                    const estimatedEndTime = new Date(data.estimatedEndTime).toString();
+                    console.log(estimatedEndTime);
                     return addPickup({
                         passengerId: pickupData.passengerId,
                         availabilityId: availability.availability.id,
@@ -34,7 +41,7 @@ const scheduleRide = function (pickupData, cb) {
                         specifiedStartTime: pickupData.startTime,
                         rideShare: null,
                         completed: false,
-                        estimatedEndTime: data.estimatedEndTime
+                        estimatedEndTime: "2020-01-20 12:12:12"
                     })
                 }
             })
