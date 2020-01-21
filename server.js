@@ -13,8 +13,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 //routes go here
-const { auth, hotels, pickups, scheduleRide } = require('./routes');
-app.use(auth, hotels, pickups, scheduleRide);
+const { auth, hotels, pickups, scheduleRide, availabilities } = require('./routes');
+app.use(auth, hotels, pickups, scheduleRide, availabilities);
 
 app.get("/", (req, res) => {
     res.send("Drive yourself!")

@@ -63,4 +63,14 @@ router.post("/api/setHotel", (req, res) => {
     })
 })
 
+router.post("/api/deleteUser", (req, res) => {
+    db.auth.deleteUser(helpers.addQuotes(req.body.id))
+    .then((val) => {
+        res.send(val)
+    })
+    .catch((err) => {
+        res.send(err)
+    })
+})
+
 module.exports = router;
