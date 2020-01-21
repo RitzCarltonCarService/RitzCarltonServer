@@ -13,13 +13,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 //routes go here
-const { auth, scheduleRide } = require('./routes');
-app.use(auth);
-app.use(scheduleRide);
+const { auth, hotels, pickups, scheduleRide, availabilities } = require('./routes');
+app.use(auth, hotels, pickups, scheduleRide, availabilities);
 
 app.get("/", (req, res) => {
     res.send("Drive yourself!")
 })
+
 
 app.listen(3000, () => {
     console.log("Server listening on port 3000");
