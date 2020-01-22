@@ -28,7 +28,7 @@ const deleteShift = function ( id ) {
 
 const getShifts = function ( driverId ) {
     return new Promise((resolve, reject) => {
-        const queryString = "SELECT * FROM availabilities WHERE driverId = " + [driverId];
+        const queryString = "SELECT * FROM availabilities LEFT JOIN pickups ON availabilities.id = pickups.availabilityId WHERE availabilities.driverId = " + [driverId];
         connection.query(queryString, (err, res) => {
             if (err) {
                 reject (err);
