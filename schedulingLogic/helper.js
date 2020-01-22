@@ -4,4 +4,17 @@ async function asyncForEach(array, callback) {
     }
   }
 
-module.exports = { asyncForEach };
+function convertDateForMYSQL(date) {
+    return date.getFullYear() + "-" + zeroPadded((date.getMonth() + 1)) + "-" + zeroPadded(date.getDate()) + " "
+        + zeroPadded(date.getHours()) + ":" + zeroPadded(date.getMinutes()) + ":" + zeroPadded(date.getSeconds());
+}
+
+function zeroPadded(num) {
+    num = num.toString();
+    if (num.length < 2) {
+        num = "0" + num;
+    }
+    return num;
+}
+
+module.exports = { asyncForEach, convertDateForMYSQL };

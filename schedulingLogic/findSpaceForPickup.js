@@ -3,10 +3,10 @@ const { validatePickup } = require('./GoogleMapRequests');
 const findSpaceForPickup = function (pickupData, availability) {
     return new Promise((resolve, reject) => {
 
-        console.log(JSON.stringify(availability));
+        console.log("PICKUPS: " + JSON.stringify(availability.pickups));
 
         //sort the pickups in the availability by startTime
-        availability.pickups.sort((a, b) => b.startTime - a.startTime)
+        // availability.pickups.sort((a, b) => b.startTime - a.startTime)
 
         //initialize previousNode as the beginning of the availability
         let previousNode = {
@@ -24,6 +24,7 @@ const findSpaceForPickup = function (pickupData, availability) {
 
         //find the nodes directly before and after the new pickup node by startTime
         for (let i = 0; i < availability.pickups.length; i++) {
+            console.log("iterating through " + i + " pickups");
             if (availability.pickups[i].startTime > pickupData.startTime) {
                 nextNode = availability.pickups[i];
                 if (i > 0) {
@@ -32,16 +33,17 @@ const findSpaceForPickup = function (pickupData, availability) {
                 break;
             }
             if (i === availability.pickups.length - 1) {
-                if (i > 0) {
-                    previousNode = availability.pickups[i];
-                }
+                previousNode = availability.pickups[i];
             }
 
         }
 
+        console.log("TIMES: " + previousNode.estimatedEndTime + " " + nextNode.estimatedStartTime)
+
         validatePickup(previousNode, nextNode, pickupData)
         .then(data => {
             console.log("resolving in .then")
+            console.log(data);
             resolve(data);
         })
         .catch(err => {

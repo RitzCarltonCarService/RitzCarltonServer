@@ -1,6 +1,6 @@
 const { schedulingHelpers : { retrieveAvailabilities, findPickupsForAvailability } } = require('../db/db_interactions');
 const { findSpaceForPickup } = require('./findSpaceForPickup');
-const { asyncForEach } = require('./helper');
+const { asyncForEach, convertDateForMYSQL } = require('./helper');
 const { addPickup } = require('../db/db_interactions/addPickup');
 
 const scheduleRide = function (pickupData, cb) {
@@ -26,8 +26,7 @@ const scheduleRide = function (pickupData, cb) {
                 if (!data) {
                     resolve("All cars are busy at this time!")
                 } else {
-                    const estimatedEndTime = new Date(data.estimatedEndTime).toString();
-                    console.log(estimatedEndTime);
+                    const estimatedEndTime = new Date(data.estimatedEndTime);
                     return addPickup({
                         passengerId: pickupData.passengerId,
                         availabilityId: availability.availability.id,
@@ -41,7 +40,7 @@ const scheduleRide = function (pickupData, cb) {
                         specifiedStartTime: pickupData.startTime,
                         rideShare: null,
                         completed: false,
-                        estimatedEndTime: "2020-01-20 12:12:12"
+                        estimatedEndTime: convertDateForMYSQL(estimatedEndTime)
                     })
                 }
             })

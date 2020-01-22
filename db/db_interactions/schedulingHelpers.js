@@ -22,7 +22,7 @@ const retrieveAvailabilities = function(hotelId, time) {
 //retrieves pickups associated with an availability and returns them both in an object
 const findPickupsForAvailability = function (availability) {
     return new Promise ((resolve, reject) => {
-        const queryString = `SELECT * FROM pickups WHERE availabilityId=${availability.id};`;
+        const queryString = `SELECT * FROM pickups WHERE availabilityId=${availability.id} ORDER BY estimatedStartTime;`;
         connection.query(queryString, (err, data) => {
             if (err) {
                 reject(err);
