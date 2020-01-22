@@ -14,9 +14,37 @@ router.post('/api/signup', (req, res) => {
 })
 
 router.get("/api/login", (req, res) => {
+    console.log(req.query);
     db.auth.login(helpers.addQuotes(req.query.id))
     .then((val) => {
-        res.send(val);
+        let userInfo = {
+            id: req.query.id,
+            name: val[0].name,
+            email: val[0].email,
+            hotelId: val[0].hotelId,
+            type: val[0].type,
+            pickups: []
+        };
+        if (val[0].id) {
+            for (let i = 0; i < val.length; i++) {
+                userInfo.pickups.push({
+                    id: val[i].id,
+                    availabilityId: val[i].availabilityId,
+                    startAddress: val[i].startAddress,
+                    startLat: val[i].startLat,
+                    startLng: val[i].startLng,
+                    endAddress: val[i].endAddress,
+                    endLat: val[i].endLat,
+                    endLng: val[i].endLng,
+                    estimatedStartTime: val[i].estimatedStartTime,
+                    specifiedStartTime: val[i].specifiedStartTime,
+                    rideShare: val[i].rideShare,
+                    completed: val[i].completed,
+                    estimatedEndTime: val[i].estimatedEndTime
+                })
+            }
+        }
+        res.send(userInfo);
     })
     .catch((err) => {
         res.send(err);

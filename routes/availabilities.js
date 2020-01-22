@@ -1,6 +1,18 @@
 const db = require('../db/db_interactions');
+const scheduleRide = require('../schedulingLogic/scheduleRide');
 const router = require('express').Router();
 const helpers = require('./helpers');
+
+router.post('/api/newPickup', (req, res) => {
+    console.log(req.body);
+    scheduleRide(req.body.pickupData, (err, data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    })
+})
 
 router.post('/api/addShift', (req, res) => {
     db.availabilities.addShift(req.body.driverId, req.body.carId, req.body.hotelId, helpers.addQuotes(req.body.startTime), helpers.addQuotes(req.body.endTime))

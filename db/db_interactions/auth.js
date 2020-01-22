@@ -16,7 +16,9 @@ const signup = function (id, type, hotelId, name, email, phoneNumber) {
 
 const login = function (id) {
     return new Promise ((resolve, reject) => {
-        const queryString = "SELECT * FROM users WHERE id = " + [id];
+        const queryString = "SELECT users.*, pickups.* FROM users " +
+            "LEFT JOIN pickups ON users.id = pickups.passengerId " +
+            "WHERE users.id = " + id + ";"
         connection.query(queryString, (err, res) => {
             console.log(err, res)
             if (err) {

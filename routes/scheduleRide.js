@@ -4,7 +4,6 @@ const router = require('express').Router();
 const helpers = require('./helpers');
 
 router.post('/api/newPickup', (req, res) => {
-    console.log(req.body);
     scheduleRide(req.body.pickupData, (err, data) => {
         if (err) {
             res.send(err);
