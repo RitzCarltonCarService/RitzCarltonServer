@@ -18,6 +18,19 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
     })
 }
 
+const getPickups = function (id) {
+    return new Promise((resolve, reject) => {
+        const queryString = "SELECT * FROM pickups WHERE passengerId = " + [id];
+        connection.query(queryString, (err, res) => {
+            if (err) {
+                reject (err);
+            } else {
+                resolve(res);
+            }
+        })
+    })
+}
+
 const deletePickup = function (id) {
     return new Promise((resolve, reject) => {
         const queryString = "DELETE FROM pickups WHERE id = "  + [id] ; //TODO: make sure this query also removes its id from any other pickup that has it as a ride share.
@@ -31,4 +44,4 @@ const deletePickup = function (id) {
     })
 }
 
-module.exports = { createPickup, deletePickup }
+module.exports = { createPickup, deletePickup, getPickups }
