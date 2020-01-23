@@ -1,7 +1,16 @@
 async function asyncForEach(array, callback) {
+    let hasFoundResult = false;
     for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
+      if (!hasFoundResult) {
+        const result = await callback(array[index]);
+        console.log(result);
+        if (result) hasFoundResult = true;
+        console.log("helper hasFound is " + hasFoundResult)
+      }
+      
     }
+    console.log("helper function returning " + hasFoundResult);
+    return hasFoundResult;
   }
 
 function convertDateForMYSQL(date) {
