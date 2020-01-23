@@ -12,6 +12,16 @@ router.post("/api/createPickup", (req, res) => {
     })
 })
 
+router.get("/api/getPickups", (req, res) => {
+    db.pickups.getPickups(helpers.addQuotes(req.query.id))
+    .then((val) => {
+        res.send(val)
+    })
+    .catch((err) => {
+        res.send(err);
+    })
+})
+
 router.post("/api/deletePickup", (req, res) => {
     db.pickups.deletePickup(req.body.id)
     .then((val) => {
