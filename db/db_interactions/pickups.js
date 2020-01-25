@@ -20,7 +20,7 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
 
 const getPickups = function (id) {
     return new Promise((resolve, reject) => {
-        const queryString = "SELECT * FROM pickups WHERE passengerId = " + [id];
+        const queryString = "SELECT pickups.id, pickups.passengerId, pickups.completed, pickups.startAddress, pickups.startLat, pickups.startLng, pickups.endAddress, pickups.endAddress, pickups.endLat, pickups.endLng, pickups.estimatedStartTime, pickups.specifiedStartTime, pickups.rideShare, pickups.estimatedEndTime, cars.id, cars.type, users.name, users.phoneNumber FROM pickups INNER JOIN availabilities ON pickups.availabilityId = availabilities.id INNER JOIN users ON availabilities.driverId = users.id INNER JOIN cars ON availabilities.carId = cars.id WHERE pickups.passengerId = " + [id];
         connection.query(queryString, (err, res) => {
             if (err) {
                 reject (err);

@@ -15,7 +15,7 @@ const addShift = function ( driverId, carId, hotelId, startTime, endTime) {
 
 const deleteShift = function ( id ) {
     return new Promise((resolve, reject) => {
-        const queryString = "DELETE FROM availabilities WHERE id = " + [id]; //TODO: SET availabilityId in pickups table as a FK referencing availabilty table's id column.  Then set"delete_rule = 'CASCADE'" which will cause this deletion operation on availabilities to also delete all pickups with matching availabilityId.
+        const queryString = "DELETE FROM availabilities WHERE id = " + [id];
         connection.query(queryString, (err) => {
             if (err) {
                 reject (err);
