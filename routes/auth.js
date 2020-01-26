@@ -19,10 +19,11 @@ router.get("/api/login", (req, res) => {
     .then((val) => {
         let userInfo = {
             id: req.query.id,
-            name: val[0].name,
+            displayName: val[0].name,
             email: val[0].email,
             hotelId: val[0].hotelId,
             type: val[0].type,
+            phoneNumber: val[0].phoneNumber,
             pickups: []
         };
         if (val[0].id) {

@@ -25,19 +25,17 @@ const scheduleRide = function (pickupData, cb) {
         console.log("Found " + availabilities.length + " availabilities");
 
         //Sort availabilities by number of pickups
-        availabilities.sort( (a, b) => b.pickups.length - a.pickups.length );
+        availabilities.sort( (a, b) => a.pickups.length - b.pickups.length );
+
+        console.log("AVAILABILITIES: " + JSON.stringify(availabilities));
 
         //Look for space in each availability, starting with the one with fewest pickups
-
-        let hasPlaced = false;
-
         return asyncForEach(availabilities, availability => {
+            console.log ("AVAILABILITY: " + JSON.stringify(availability));
             return findSpaceForPickup(pickupData, availability)
             .then((data) => {
                 console.log("DATA IS " + data);
                 if (data) {
-                    const estimatedEndTime = new Date(data.estimatedEndTime);
-                    hasPlaced = true;
                     return addPickup({
                         passengerId: pickupData.passengerId,
                         availabilityId: availability.availability.id,
@@ -51,16 +49,12 @@ const scheduleRide = function (pickupData, cb) {
                         specifiedStartTime: convertDateForMYSQL(new Date(pickupData.startTime)),
                         rideShare: null,
                         completed: false,
-                        estimatedEndTime: convertDateForMYSQL(estimatedEndTime)
+                        estimatedEndTime: convertDateForMYSQL(new Date(data.estimatedEndTime))
                     })
                 }
             })
-            .then((data) => data);
-            // .catch(err => {
-            //     cb(err);
-            // })
+            //.then((data) => data);
         })
-        // .catch(err => cb(err))
     })
     .then(data => {
         console.log("Should return " + data);

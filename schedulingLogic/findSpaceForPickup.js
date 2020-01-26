@@ -11,7 +11,11 @@ const findSpaceForPickup = function (pickupData, availability) {
 
         //access car location data
 
-        carLocation = getCarLocation(availability.availability.carId);
+        console.log("CAR ID: " + availability.availability.carId);
+
+        let carLocation = getCarLocation(availability.availability.carId);
+
+        console.log("MADE IT HERE")
 
         //initialize previousNode as the beginning of the availability
         let previousNode = {
@@ -41,10 +45,13 @@ const findSpaceForPickup = function (pickupData, availability) {
             console.log("expected: " + availability.pickups[i].estimatedStartTime);
 
             //check to see if car is currently in the middle of a pickup
-            if (availability.pickups[i].estimatedStartTime <= new Date() && availability.pickups[i].estimatedEndTime >= new Date()) {
-                resolve(null);
-                return;
-            }
+            console.log("pickup starts at " + availability.pickups[i].estimatedStartTime);
+            console.log("pickup endTime is " + availability.pickups[i].estimatedEndTime);
+            console.log("current time is " + new Date());
+            // if (availability.pickups[i].estimatedStartTime <= new Date() && availability.pickups[i].estimatedEndTime >= new Date()) {
+            //     resolve(null);
+            //     return;
+            // }
 
             //set nextNode and previousNode if proper spot is found
             if (pickupData.startTime && availability.pickups[i].startTime > pickupData.estimatedStartTime) {
@@ -52,7 +59,7 @@ const findSpaceForPickup = function (pickupData, availability) {
                 if (i > 0) {
                     previousNode = availability.pickups[i]
                 }
-                break;
+                i = availability.pickups.length;
             }
             if (i === availability.pickups.length - 1) {
                 previousNode = availability.pickups[i];

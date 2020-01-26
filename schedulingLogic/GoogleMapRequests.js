@@ -36,10 +36,10 @@ const validatePickup = function (startNode, endNode, pickup, now) {
             params: params1
         })
         .then((result) => {
-            console.log("Time at 1: " + params1.departure_time);
+            console.log("Time at 1: " + new Date(params1.departure_time));
             console.log("Time from 1 to 2: " + result.data.rows[0].elements[0].duration.value * 1000);
             console.log("Summed: " + (params1.departure_time + result.data.rows[0].elements[0].duration.value * 1000));
-            console.log("When pickup needs to happen: " + params2.departure_time);
+            console.log("When pickup needs to happen: " + new Date(params2.departure_time));
             if (params2.departure_time && params1.departure_time + (result.data.rows[0].elements[0].duration.value * 1010)  >= params2.departure_time) {
                 console.log("No space")
                 resolve(null);
@@ -70,6 +70,8 @@ const validatePickup = function (startNode, endNode, pickup, now) {
         .then((result) => {
             if (!result) return;
             console.log("Second leg succeeded");
+            console.log(JSON.stringify(params3));
+            console.log(JSON.stringify(result.data.rows[0]));
             if (params3.departure_time + (result.data.rows[0].elements[0].duration.value * 1010) >= endNode.estimatedStartTime.getTime()) {
                 console.log("No space");
                 resolve(null);
