@@ -29,6 +29,10 @@ const findSpaceForPickup = function (pickupData, availability) {
             previousNode.endLat = carLocation.lat,
             previousNode.endLng = carLocation.lng,
             previousNode.estimatedEndTime = new Date();
+
+            if (availability.pickups.length > 0) {
+                nextNode = availability.pickups[0];
+            }
         }
 
         //initialize nextNode as the end of the availability
@@ -38,33 +42,26 @@ const findSpaceForPickup = function (pickupData, availability) {
             estimatedStartTime: availability.availability.endTime
         };
 
-        //find the nodes directly before and after the new pickup node by startTime
-        for (let i = 0; i < availability.pickups.length; i++) {
-            console.log("iterating through " + i + " pickups");
-            console.log("current: " + availability.pickups[i].startTime);
-            console.log("expected: " + availability.pickups[i].estimatedStartTime);
+        //if scheduled, find the nodes directly before and after the new pickup node by startTime
+        if (pickupData.startTime) {
 
-            //check to see if car is currently in the middle of a pickup
-            console.log("pickup starts at " + availability.pickups[i].estimatedStartTime);
-            console.log("pickup endTime is " + availability.pickups[i].estimatedEndTime);
-            console.log("current time is " + new Date());
-            // if (availability.pickups[i].estimatedStartTime <= new Date() && availability.pickups[i].estimatedEndTime >= new Date()) {
-            //     resolve(null);
-            //     return;
-            // }
+            for (let i = 0; i < availability.pickups.length; i++) {
 
-            //set nextNode and previousNode if proper spot is found
-            if (pickupData.startTime && availability.pickups[i].startTime > pickupData.estimatedStartTime) {
-                nextNode = availability.pickups[i];
-                if (i > 0) {
-                    previousNode = availability.pickups[i]
+                //if this is the last pickup, set it to previousNode by default
+                if (i === availability.pickups.length - 1) {
+                    previousNode = availability.pickups[i];
                 }
-                i = availability.pickups.length;
-            }
-            if (i === availability.pickups.length - 1) {
-                previousNode = availability.pickups[i];
-            }
 
+                //if this pickup is after the requested time, set it to nextNode
+                //and set the previous pickup to previousNode
+                if (availability.pickups[i].startTime > pickupData.estimatedStartTime) {
+                    nextNode = availability.pickups[i];
+                    if (i > 0) {
+                        previousNode = availability.pickups[i];
+                    }
+                    i = availability.pickups.length;
+                }
+            }
         }
 
         console.log("TIMES: " + previousNode.estimatedEndTime + " " + nextNode.estimatedStartTime)
