@@ -7,7 +7,6 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
         //how do we get lat/long from address?
         //shouldn't pickups table have a bags field?
         const queryString = "INSERT INTO pickups (passengerId, startAddress, endAdress, specefiedStartTime, rideShare) VALUES (" + [userId, to, from, starTime].join(", ") + ", " + [rideShare] + ")";
-        console.log("str = ", queryString) 
         connection.query(queryString, (err) => {
             if (err) {
                 reject (err);
