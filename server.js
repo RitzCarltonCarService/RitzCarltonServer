@@ -12,7 +12,7 @@ const { auth, hotels, pickups, scheduleRide, availabilities, carTracker } = requ
 app.use(auth, hotels, pickups, scheduleRide, availabilities, carTracker);
 
 app.get("/", (req, res) => {
-    res.send("Drive yourself!")
+    res.send("Drive yourself! Or don't.")
 })
 
 

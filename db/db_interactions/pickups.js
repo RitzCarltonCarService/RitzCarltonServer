@@ -7,7 +7,6 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
         //how do we get lat/long from address?
         //shouldn't pickups table have a bags field?
         const queryString = "INSERT INTO pickups (passengerId, startAddress, endAdress, specefiedStartTime, rideShare) VALUES (" + [userId, to, from, starTime].join(", ") + ", " + [rideShare] + ")";
-        console.log("str = ", queryString) 
         connection.query(queryString, (err) => {
             if (err) {
                 reject (err);
@@ -20,7 +19,7 @@ const createPickup = function (to, from, userId, hotelId, rideShare, numBags, nu
 
 const getPickups = function (id) {
     return new Promise((resolve, reject) => {
-        const queryString = "SELECT pickups.id AS pickupId, pickups.passengerId, pickups.completed, pickups.startAddress, pickups.startLat, pickups.startLng, pickups.endAddress, pickups.endAddress, pickups.endLat, pickups.endLng, pickups.estimatedStartTime, pickups.specifiedStartTime, pickups.rideShare, pickups.estimatedEndTime, cars.id AS carId, cars.type AS carType, users.name AS driverName, users.phoneNumber AS driverPhoneNumber FROM pickups INNER JOIN availabilities ON pickups.availabilityId = availabilities.id INNER JOIN users ON availabilities.driverId = users.id INNER JOIN cars ON availabilities.carId = cars.id WHERE pickups.passengerId = " + [id];
+        const queryString = "SELECT pickups.id AS pickupId, pickups.passengerId, pickups.completed, pickups.startAddress, pickups.startLat, pickups.startLng, pickups.endAddress, pickups.endAddress, pickups.endLat, pickups.endLng, pickups.estimatedStartTime, pickups.specifiedStartTime, pickups.rideShare, pickups.estimatedEndTime, cars.id AS carId, cars.type AS carType, users.name AS driverName, users.phoneNumber AS driverPhoneNumber FROM pickups INNER JOIN availabilities ON pickups.availabilityId = availabilities.id INNER JOIN users ON availabilities.driverId = users.id INNER JOIN cars ON availabilities.carId = cars.id WHERE pickups.passengerId = " + id;
         connection.query(queryString, (err, res) => {
             if (err) {
                 reject (err);

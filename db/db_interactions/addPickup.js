@@ -9,7 +9,8 @@ const addPickup = function(pickup) {
             if (err) {
                 reject(err);
             } else {
-                resolve("Pickup added");
+                console.log("true");
+                resolve(pickup.availabilityId);
             }
         })
     })

@@ -1,4 +1,15 @@
-let carData = {};
+let carData = {
+    1: {
+        lat: 29.7620,
+        lng: -95.3692,
+        newInfo: false
+    },
+    2: {
+        lat: 29.7615,
+        lng: -95.3700,
+        newInfo: false
+    }
+};
 
 const updateCarLocation = function (id, lat, lng) {
     if (!carData[id]) {
