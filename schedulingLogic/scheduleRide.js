@@ -1,9 +1,12 @@
 const { schedulingHelpers : { retrieveAvailabilities, findPickupsForAvailability } } = require('../db/db_interactions');
 const { findSpaceForPickup } = require('./findSpaceForPickup');
+const { updateRetrieveNewInfo } = require('./carData');
 const { asyncForEach, convertDateForMYSQL } = require('./helper');
 const { addPickup } = require('../db/db_interactions/addPickup');
 
 const scheduleRide = function (pickupData, cb) {
+
+    let chosenCar = null;
 
     //Get availabilities at pickup start time
     retrieveAvailabilities(pickupData.hotelId, pickupData.startTime || convertDateForMYSQL(new Date()))
@@ -36,6 +39,7 @@ const scheduleRide = function (pickupData, cb) {
             .then((data) => {
                 console.log("DATA IS " + data);
                 if (data) {
+                    chosenCar = availability.availability.carId;
                     return addPickup({
                         passengerId: pickupData.passengerId,
                         availabilityId: availability.availability.id,
@@ -57,9 +61,11 @@ const scheduleRide = function (pickupData, cb) {
         })
     })
     .then(data => {
-        console.log("Should return " + data);
-        if (data) cb("Pickup added!")
-        else cb("All drivers are busy at this time.")
+        if (data) {
+            console.log(chosenCar);
+            updateRetrieveNewInfo(id);
+            cb("Pickup added!");
+        } else cb("All drivers are busy at this time.")
     })
     .catch (err => cb(err));
 }

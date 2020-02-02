@@ -10,7 +10,7 @@ const addPickup = function(pickup) {
                 reject(err);
             } else {
                 console.log("true");
-                resolve(true);
+                resolve(pickup.availabilityId);
             }
         })
     })
