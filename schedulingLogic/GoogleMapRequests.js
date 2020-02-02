@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_API_KEY = 'AIzaSyBaF0edzUB77nVFJK1guMAyOfpCVUU73UI';
 const axios = require('axios');
 
 //checks to see whether a pickup will fit between two other travel nodes

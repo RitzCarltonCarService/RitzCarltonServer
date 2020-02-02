@@ -3,7 +3,7 @@ const { validatePickup } = require('./GoogleMapRequests');
 const findSpaceForPickup = function (pickupData, availability) {
     return new Promise((resolve, reject) => {
 
-        console.log(JSON.stringify(availability));
+        // console.log(JSON.stringify(availability));
 
         //sort the pickups in the availability by startTime
         availability.pickups.sort((a, b) => b.startTime - a.startTime)
@@ -46,7 +46,7 @@ const findSpaceForPickup = function (pickupData, availability) {
         })
         .catch(err => {
             console.log("resolving in .catch")
-            console.log(err);
+            // console.log(err);
             reject(err);
         })
 
