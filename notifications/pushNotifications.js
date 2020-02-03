@@ -154,7 +154,7 @@ const checkRequests = () => {
 }; 
  
 const checkPickUps = () => {
-    setInterval(() => checkRequests(), 10000);
+    setInterval(() => checkRequests(), 30000);
 };   
 
 module.exports = { checkPickUps };
