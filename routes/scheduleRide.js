@@ -16,8 +16,7 @@ router.post('/api/newPickup', (req, res) => {
         if (err) {
             res.send(err);
         } else {
-            console.log("Added a request!")
-            if (data = "Pickup added!") {
+            if (data === "Pickup added!") {
                 // Sending Transaction email with details of ride request
                 const request = mailjet
                     .post("send", {'version': 'v3.1'})
@@ -57,7 +56,10 @@ router.post('/api/newPickup', (req, res) => {
                     })
                     .catch((err) => {
                         console.log(err.statusCode)
+                        res.send(err);
                     })    
+            } else {
+                res.send(data);
             }
         }
     })
