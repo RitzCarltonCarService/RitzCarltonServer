@@ -21,7 +21,7 @@ const scheduleRide = function (pickupData, cb) {
 
         //Return if there are no availabilities at this time
         if (availabilities.length === 0) {
-            cb("There are no drivers working at that time");
+            cb(null, "There are no drivers working at that time");
             return;
         }
 
@@ -64,10 +64,10 @@ const scheduleRide = function (pickupData, cb) {
         if (data) {
             console.log(chosenCar);
             updateRetrieveNewInfo(id);
-            cb("Pickup added!");
-        } else cb("All drivers are busy at this time.")
+            cb(null, "Pickup added!");
+        } else cb(null, "All drivers are busy at this time.")
     })
-    .catch (err => cb(err));
+    .catch (err => cb(err, null));
 }
 
 module.exports = scheduleRide
