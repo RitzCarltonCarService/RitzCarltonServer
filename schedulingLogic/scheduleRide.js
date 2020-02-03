@@ -15,7 +15,7 @@ const scheduleRide = function (pickupData, cb) {
     })
     .then((availabilities) => {    
         if (availabilities.length === 0) {
-            cb("There are no drivers working at that time");
+            cb(null, "There are no drivers working at that time");
             return;
         }
         console.log("Found " + availabilities.length + " availabilities");
@@ -46,14 +46,18 @@ const scheduleRide = function (pickupData, cb) {
                 }
             })
             .then(data => {
-                cb("Pickup added!")
+                if (data) {
+                    cb(null, "Pickup added!")
+                } else {
+                    cb(null, "All drivers are busy at this time!")
+                }
             })
             .catch(err => {
-                cb(err);
+                cb(err, null);
             })
         })
     })
-    .catch (err => cb(err));
+    .catch (err => cb(err, null));
 }
 
 module.exports = scheduleRide
