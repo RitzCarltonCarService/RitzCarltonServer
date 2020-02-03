@@ -11,6 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 const { auth, hotels, pickups, scheduleRide, availabilities, carTracker, addToken } = require('./routes');
 app.use(auth, hotels, pickups, scheduleRide, availabilities, carTracker, addToken);
 
+// Server-side push notifications for users
+const { checkPickUps } = require('./notifications/pushNotifications');
+checkPickUps();
+
 app.get("/", (req, res) => {
     res.send("Drive yourself! Or don't.")
 })

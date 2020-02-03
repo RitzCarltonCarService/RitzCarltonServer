@@ -52,6 +52,8 @@ const scheduleRide = function (pickupData, cb) {
                         estimatedStartTime: convertDateForMYSQL(new Date(pickupData.startTime)),
                         specifiedStartTime: convertDateForMYSQL(new Date(pickupData.startTime)),
                         rideShare: null,
+                        hourNotification: false,
+                        minNotification: false,
                         completed: false,
                         estimatedEndTime: convertDateForMYSQL(new Date(data.estimatedEndTime))
                     })
