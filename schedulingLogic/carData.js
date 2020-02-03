@@ -15,8 +15,9 @@ const updateCarLocation = function (id, lat, lng) {
     if (!carData[id]) {
         carData[id] = {}
     }
-    carData[id].lat = lat,
-    carData[id].lng = lng
+    carData[id].lat = lat;
+    carData[id].lng = lng;
+    carData[id].newInfo = false;
 }
 
 const updateRetrieveNewInfo = function (id) {

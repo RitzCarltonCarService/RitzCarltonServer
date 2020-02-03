@@ -62,8 +62,8 @@ const scheduleRide = function (pickupData, cb) {
     })
     .then(data => {
         if (data) {
-            console.log(chosenCar);
-            updateRetrieveNewInfo(id);
+            console.log("chosenCar " + chosenCar);
+            updateRetrieveNewInfo(chosenCar);
             cb(null, "Pickup added!");
         } else cb(null, "All drivers are busy at this time.")
     })
