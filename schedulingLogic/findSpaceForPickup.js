@@ -7,11 +7,8 @@ const findSpaceForPickup = function (pickupData, availability) {
         //sort the pickups in the availability by startTime
         availability.pickups.sort((a, b) => b.startTime - a.startTime)
 
-        //access car location data
-
-        let carLocation = getCarLocation(availability.availability.carId);
-
         //initialize previousNode as the beginning of the availability
+
         let previousNode = {
             endLat: availability.availability.lat,
             endLng: availability.availability.lng,
@@ -20,6 +17,7 @@ const findSpaceForPickup = function (pickupData, availability) {
 
         //if there is no specified start time, reassign previousNode to current time and car location
         if (!pickupData.startTime) {
+            let carLocation = getCarLocation(availability.availability.carId);
             previousNode.endLat = carLocation.lat,
             previousNode.endLng = carLocation.lng,
             previousNode.estimatedEndTime = new Date();
