@@ -2,11 +2,12 @@ const db = require('../db/db_interactions');
 const scheduleRide = require('../schedulingLogic/scheduleRide');
 const router = require('express').Router();
 const helpers = require('./helpers');
+const dotenv = require('dotenv');
 
 // Mail Jet API keys
-const API_KEY = '6fb7d99c6ae7057faeff502fc8822db9';
-const API_SECRET = '5d09c2410947c804a36c98b1e7c8d63c';
-const mailjet = require('node-mailjet').connect(API_KEY, API_SECRET);
+const MJ_API_KEY = process.env.MJ_API_KEY;
+const MJ_API_SECRET = process.env.MJ_API_SECRET;
+const mailjet = require('node-mailjet').connect(MJ_API_KEY, MJ_API_SECRET);
 
 router.post('/api/newPickup', (req, res) => {
     let rideData = req.body.pickupData; 

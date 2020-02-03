@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyBaF0edzUB77nVFJK1guMAyOfpCVUU73UI';
+const GOOGLE_MAPS_APIKEY = process.env.GOOGLE_MAPS_APIKEY;
 const axios = require('axios');
 
 //checks to see whether a pickup will fit between two other travel nodes
@@ -15,21 +15,21 @@ const validatePickup = function (startNode, endNode, pickup, now) {
             origins: startNode.endLat + "," + startNode.endLng,
             departure_time: startNode.estimatedEndTime.getTime(),
             destinations: pickup.startLat + "," + pickup.startLng,
-            key: GOOGLE_MAPS_API_KEY
+            key: GOOGLE_MAPS_APIKEY
         };
     
         const params2 = {
             origins: pickup.startLat + "," + pickup.startLng,
             departure_time: now ? null : new Date(pickup.startTime).getTime(),
             destinations: pickup.endLat + "," + pickup.endLng,
-            key: GOOGLE_MAPS_API_KEY
+            key: GOOGLE_MAPS_APIKEY
         };
     
         const params3 = {
             origins: pickup.endLat + "," + pickup.endLng,
             departure_time: null,
             destinations: endNode.startLat + "," + endNode.startLng,
-            key: GOOGLE_MAPS_API_KEY
+            key: GOOGLE_MAPS_APIKEY
         };
     
         axios.get('https://maps.googleapis.com/maps/api/distancematrix/json', {
