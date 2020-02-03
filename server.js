@@ -12,7 +12,7 @@ const { auth, hotels, pickups, scheduleRide, availabilities, carTracker, addToke
 app.use(auth, hotels, pickups, scheduleRide, availabilities, carTracker, addToken);
 
 app.get("/", (req, res) => {
-    res.send("Drive yourself!")
+    res.send("Drive yourself! Or don't.")
 })
 
 app.listen(3000, () => {
