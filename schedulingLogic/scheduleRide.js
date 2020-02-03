@@ -64,10 +64,10 @@ const scheduleRide = function (pickupData, cb) {
         if (data) {
             console.log(chosenCar);
             updateRetrieveNewInfo(id);
-            cb("Pickup added!");
-        } else cb("All drivers are busy at this time.")
+            cb(null, "Pickup added!");
+        } else cb(null, "All drivers are busy at this time.")
     })
-    .catch (err => cb(err));
+    .catch (err => cb(err, null));
 }
 
 module.exports = scheduleRide
