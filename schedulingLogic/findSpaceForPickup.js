@@ -5,19 +5,21 @@ const findSpaceForPickup = function (pickupData, availability) {
     return new Promise((resolve, reject) => {
 
         //sort the pickups in the availability by startTime
-        availability.pickups.sort((a, b) => b.startTime - a.startTime)
-
-        //initialize previousNode as the beginning of the availability
+        availability.pickups.sort((a, b) => b.startTime - a.startTime);
 
         let previousNode = {
-            endLat: availability.availability.lat,
-            endLng: availability.availability.lng,
-            estimatedEndTime: availability.availability.startTime
+            endLat: null,
+            endLng: null,
+            estimatedEndTime: null
         };
+
+        let nextNode = {};
 
         //if there is no specified start time, reassign previousNode to current time and car location
         if (!pickupData.startTime) {
+            console.log("looking at car location");
             let carLocation = getCarLocation(availability.availability.carId);
+            console.log("car location: " + carLocation);
             previousNode.endLat = carLocation.lat,
             previousNode.endLng = carLocation.lng,
             previousNode.estimatedEndTime = new Date();
@@ -25,10 +27,18 @@ const findSpaceForPickup = function (pickupData, availability) {
             if (availability.pickups.length > 0) {
                 nextNode = availability.pickups[0];
             }
+        } else {
+            //initialize previousNode as the beginning of the availability
+
+            previousNode = {
+                endLat: availability.availability.lat,
+                endLng: availability.availability.lng,
+                estimatedEndTime: availability.availability.startTime
+            };
         }
 
         //initialize nextNode as the end of the availability
-        let nextNode = {
+        nextNode = {
             startLat: availability.availability.lat,
             startLng: availability.availability.lng,
             estimatedStartTime: availability.availability.endTime
