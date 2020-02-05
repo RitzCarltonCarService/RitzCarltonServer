@@ -37,7 +37,6 @@ const scheduleRide = function (pickupData, cb) {
             console.log ("AVAILABILITY: " + JSON.stringify(availability));
             return findSpaceForPickup(pickupData, availability)
             .then((data) => {
-                console.log("DATA IS " + data);
                 if (data) {
                     chosenCar = availability.availability.carId;
                     return addPickup({

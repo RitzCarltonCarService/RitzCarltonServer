@@ -78,7 +78,7 @@ const formatShifts = data => {
             estimatedStartTime: data[i].estimatedStartTime,
             specifiedStartTime: data[i].specifiedStartTime,
             rideShare: data[i].rideShare,
-            estimatedEndTime: data[i].estimatedEndtime
+            estimatedEndTime: data[i].estimatedEndTime
         })
     }
     return output;
