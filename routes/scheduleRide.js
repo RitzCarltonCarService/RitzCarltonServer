@@ -14,6 +14,7 @@ router.post('/api/newPickup', (req, res) => {
 
     scheduleRide(req.body.pickupData, (err, data) => {
         if (err) {
+            console.log("Sending error: " + err);
             res.send(err);
         } else {
             console.log("Added a request!")
@@ -53,11 +54,19 @@ router.post('/api/newPickup', (req, res) => {
                         })
                     request
                     .then((result) => {
+                        console.log("Sent email");
+                        console.log("resolving with " + data);
                         res.send(data);
                     })
                     .catch((err) => {
                         console.log(err.statusCode)
+                        console.log("Sending error: " + err)
+                        res.send(err);
                     })    
+            } else {
+                console.log("No email");
+                console.log("Resolving with " + data);
+                res.send(data);
             }
         }
     })

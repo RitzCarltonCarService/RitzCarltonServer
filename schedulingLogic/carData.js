@@ -13,17 +13,23 @@ let carData = {
 
 const updateCarLocation = function (id, lat, lng) {
     if (!carData[id]) {
-        carData[id] = {}
+        carData[id] = {};
+        carData[id].newInfo = false;
     }
-    carData[id].lat = lat,
-    carData[id].lng = lng
+    carData[id].lat = lat;
+    carData[id].lng = lng;
 }
 
-const updateRetrieveNewInfo = function (id) {
-    carData[id].newInfo = !carData[id].newInfo;
+const updateRetrieveNewInfo = function (id, value) {
+    console.log(id);
+    if (!carData[id]) {carData[id] = {}};
+    carData[id].newInfo = value;
+    console.log(carData[id])
+    console.log(carData[1]);
 }
 
 const getCarLocation = function (id) {
+    console.log("Car: " + carData[id]);
     return {
         lat: carData[id].lat,
         lng: carData[id].lng

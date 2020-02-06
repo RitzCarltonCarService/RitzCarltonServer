@@ -37,7 +37,6 @@ const scheduleRide = function (pickupData, cb) {
             console.log ("AVAILABILITY: " + JSON.stringify(availability));
             return findSpaceForPickup(pickupData, availability)
             .then((data) => {
-                console.log("DATA IS " + data);
                 if (data) {
                     chosenCar = availability.availability.carId;
                     return addPickup({
@@ -64,8 +63,8 @@ const scheduleRide = function (pickupData, cb) {
     })
     .then(data => {
         if (data) {
-            console.log(chosenCar);
-            updateRetrieveNewInfo(id);
+            console.log("chosenCar " + chosenCar);
+            updateRetrieveNewInfo(chosenCar, true);
             cb(null, "Pickup added!");
         } else cb(null, "All drivers are busy at this time.")
     })
