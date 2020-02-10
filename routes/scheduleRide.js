@@ -29,7 +29,7 @@ router.post('/api/newPickup', (req, res) => {
                     twilio.messages
                         .create({
                             body: "Ritz-Carlton Residences: You have a pickup scheduled for " +
-                                rideData.date + ".\n\n" +
+                                rideData.startTime + ".\n\n" +
                                 "You will be picked up at " + rideData.startAddress + ".\n\n" +
                                 "See the Ritz-Carlton Car Service app for more details.",
                             from: '+18014365944',
@@ -37,59 +37,57 @@ router.post('/api/newPickup', (req, res) => {
                         })
                         .then(message => {
                             console.log(message);
-                            res.send(data);
                         })
                         .catch(err => {
                             console.log(err);
-                            res.send(data);
                         });
                 }
 
 
                 //Sending Transaction email with details of ride request
-                // const request = mailjet
-                //     .post("send", {'version': 'v3.1'})
-                //     .request({
-                //         "Messages":[
-                //             {
-                //                 "From": {
-                //                     "Email": "jonathan.keane@galvanize.com",
-                //                     "Name": "The Ritz-Carlton Residences"
-                //                 },
-                //                 "To": [
-                //                     {
-                //                         "Email": rideData.email,
-                //                         "Name": rideData.name
-                //                     }
-                //                 ],
-                //                 "TemplateID": 1208028,
-                //                 "TemplateLanguage": true,
-                //                 "Subject": "* Ritz-Carlton Residences: Confirmation Ride Request Information - Thank you!",
-                //                 "Variables": {
-                //                         "TripDate": rideData.date,
-                //                         "TripTime": rideData.startHoursMins,
-                //                         "ArrivalTime": rideData.expectedArrivalTime,
-                //                         "PickUpLocation": rideData.startAddress,
-                //                         "DropOffLocation": rideData.endAddress,
-                //                         "LuggageAmount": rideData.luggage,
-                //                         "TotalTravelerAmount": rideData.travelers,
-                //                         "RideShareBoolean": rideData.rideShare ? "Yes" : "No",
-                //                         "appURL": "https://www.ritzcarlton.com/en/residences"
-                //                     }
-                //                 }
-                //             ]
-                //         })
-                //     request
-                //     .then((result) => {
-                //         console.log("Sent email");
-                //         console.log("resolving with " + data);
-                //         res.send(data);
-                //     })
-                //     .catch((err) => {
-                //         console.log(err.statusCode)
-                //         console.log("Sending error: " + err)
-                //         res.send(err);
-                //     })    
+                const request = mailjet
+                    .post("send", {'version': 'v3.1'})
+                    .request({
+                        "Messages":[
+                            {
+                                "From": {
+                                    "Email": "jonathan.keane@galvanize.com",
+                                    "Name": "The Ritz-Carlton Residences"
+                                },
+                                "To": [
+                                    {
+                                        "Email": rideData.email,
+                                        "Name": rideData.name
+                                    }
+                                ],
+                                "TemplateID": 1208028,
+                                "TemplateLanguage": true,
+                                "Subject": "* Ritz-Carlton Residences: Confirmation Ride Request Information - Thank you!",
+                                "Variables": {
+                                        "TripDate": rideData.date,
+                                        "TripTime": rideData.startHoursMins,
+                                        "ArrivalTime": rideData.expectedArrivalTime,
+                                        "PickUpLocation": rideData.startAddress,
+                                        "DropOffLocation": rideData.endAddress,
+                                        "LuggageAmount": rideData.luggage,
+                                        "TotalTravelerAmount": rideData.travelers,
+                                        "RideShareBoolean": rideData.rideShare ? "Yes" : "No",
+                                        "appURL": "https://www.ritzcarlton.com/en/residences"
+                                    }
+                                }
+                            ]
+                        })
+                    request
+                    .then((result) => {
+                        console.log("Sent email");
+                        console.log("resolving with " + data);
+                        res.send(data);
+                    })
+                    .catch((err) => {
+                        console.log(err.statusCode)
+                        console.log("Sending error: " + err)
+                        res.send(data);
+                    })    
             } else {
                 console.log("No email");
                 console.log("Resolving with " + data);
